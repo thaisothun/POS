@@ -31,12 +31,14 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     '.railway.app',
-    'healthcheck.railway.app', # Mandated for Railway internal uptime checks
+    'healthcheck.railway.app',
+    'https://point-of-sale.b-cdn.net/', # Mandated for Railway internal uptime checks
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.railway.app',
     'https://pos-production-97d3.up.railway.app/',
+    'https://point-of-sale.b-cdn.net/',
 ]
 
 # Fixes admin login loop issues over HTTPS proxy terminations
