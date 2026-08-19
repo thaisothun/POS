@@ -155,7 +155,7 @@ USE_THOUSAND_SEPARATOR = True
 STATIC_URL = 'https://point-of-sale.b-cdn.net/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-MEDIA_URL = 'https://point-of-sale-media.b-cdn.net/media/'
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STORAGES = {
