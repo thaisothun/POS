@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-k&jm&r*qv#)g30dt=le#%=0998r1!uzc0*us#xa!8mn5#9g9!7'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -112,6 +112,7 @@ AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
 AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL')
 AWS_DEFAULT_ACL = None
 AWS_S3_FILE_OVERWRITE = False
+AWS_S3_CUSTOM_DOMAIN = "point-of-sale-media.b-cdn.net/"
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
@@ -152,10 +153,10 @@ USE_THOUSAND_SEPARATOR = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = 'https://point-of-sale.b-cdn.net/static/'
+STATIC_URL = 'point-of-sale.b-cdn.net/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-MEDIA_URL = '/media/'
+MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STORAGES = {
