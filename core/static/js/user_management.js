@@ -168,7 +168,7 @@ async function get_user(div_name, username) {
             document.getElementById('modify_email').children[1].value = item.email
             document.getElementById('modify_store').children[1].value = item.userprofile__store
             document.getElementById('modify_address').children[1].value = item.userprofile__address
-            document.getElementById('modify_profile_photo').children[0].src = `${media_url}${item.userprofile__image_profile}`    
+            document.getElementById('modify_profile_photo').children[0].src = `${media_url}{item.userprofile__image_profile}`    
         })
     } catch (error) {
         console.error('Fetch error:', error);
