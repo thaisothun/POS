@@ -123,7 +123,7 @@ async function get_inventory(div_name, product_id) {
             item_price.children[1].value = item.price
             item_cost.children[1].value = item.cost
             item_reorder_alert.children[1].value = item.reorder_alert
-            item_photo.children[0].setAttribute('src', `/media/${item.photo}`)
+            item_photo.children[0].setAttribute('src', `${media_url}media/${item.photo}`)
         })
     
     } catch (error) {
