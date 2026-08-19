@@ -1,0 +1,65 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block css %}
+<link rel=stylesheet href="{% static 'css/index_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/report_management.css' %}" fetchpriority=high>
+
+{% endblock %}
+
+{% block title %}
+<title>Report Management - Generate</title>
+{% endblock %}
+
+{% block content %}
+<div class="report_content" id="report_content">
+    <small>{% now "jS F Y H:i" %}</small>
+    <h1>{{store | title}}</h1>
+    <h1>Profit and Loss Statement</h1>
+    <h1 id="date">From <span id="from_date"></span> To <span id="to_date"></span></h1>
+    <div class="fliter"><div><span> Start Date</span><input id="start_date" type="date"><span> End Date</span><input id="end_date" type="date"></div><button id="generate">Generate Report</button></div>
+    <hr style="margin: 0 2rem;">
+    <div class="print"><button id="print" onclick="window.print()">Print</button></div>
+    <div class="profit_loss" id="profit_loss">
+        <div>
+            <h2>Income</h2>
+                <h3>Sale</h3>
+                <h3>Others</h3>
+                <h3>Total</h3>
+            <h2>Cost of Goods Sold</h2>
+                <h3>Items</h3>
+                <h3>Promotion Code</h3>
+                <h3>Discount</h3>
+                <h3>Total</h3>
+            <h2>Expanse</h2>
+                <div id="expanse_list">
+                
+                </div>
+                <h3>Total</h3>
+            <h2>Net Profit</h2>        
+        </div>
+        <div>
+            <div id="content">
+            <h2>Income</h2>
+                <h3>Sale</h3>
+                <h3>Others</h3>
+                <h3>Total</h3>
+            <h2>Cost of Goods Sold</h2>
+                <h3>Items</h3>
+                <h3>Promotion Code</h3>
+                <h3>Discount</h3>
+                <h3>Total</h3>
+            </div>
+            <h2 style="visibility: hidden;">Expanse</h2>
+                <div id="expanse_list_amount">
+                    
+                </div>
+                <h3 id="total_expanse">Total</h3>
+            <h2 id="net_profit">Net Profit</h2>        
+        </div>
+    </div>
+</div>
+<script defer src="{% static 'js/show_div.js' %}"></script>
+<script defer src="{% static 'js/report_management_financial.js' %}"></script>
+
+{% endblock %}

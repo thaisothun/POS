@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block css %}
+<link rel=stylesheet href="{% static 'css/index_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/report_management.css' %}" fetchpriority=high>
+
+{% endblock %}
+
+{% block title %}
+<title>Report Management - Purchase Report By Date Generate</title>
+{% endblock %}
+
+{% block content %}
+<div class="report_content" id="report_content">
+    <small>{% now "jS F Y H:i" %}</small>
+    <h1>Purchase Report By Date</h1>
+    <h1 id="date">From <span id="from_date"></span> To <span id="to_date"></span></h1>
+    <div class="fliter"><div><span> Start Date</span><input id="start_date" type="date"><span> End Date</span><input id="end_date" type="date"></div><button id="generate">Generate Report</button></div>
+    <hr style="margin: 0 2rem;">
+    <div class="print"><button id="excel">Excel</button><button id="print" onclick="window.print()">Print</button></div>
+    <table>
+        <thead>
+        <tr>
+        <th>DATE</th>
+        <th>STORE</th>
+        <th>TOTAL</th>
+        <th>PROMOTION CODE</th>
+        <th>DISCOUNT(%)</th>
+        <th>NET TOTAL</th>
+        </tr>
+        </thead>
+        <tbody id="table_content">
+        {% for item in sale_transactions %}
+        <tr>
+        <td>{{ item.transaction_date }}</td>
+        <td>{{ item.store}}</td>
+        <td>{{ item.total_amount }}</td>
+        <td>{{ item.promotion_code }}</td>
+        <td>{{ item.discount}}</td>
+        <td>{{ item.net_amount}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script defer src="{% static 'js/show_div.js' %}"></script>
+<script defer src="{% static 'js/report_management_purchase_date.js' %}"></script>
+
+{% endblock %}

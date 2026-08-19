@@ -1,0 +1,108 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load auth_extras %}
+{% block css %}
+<link rel=stylesheet href="{% static 'css/index_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/item_management_style.css' %}" fetchpriority=high>
+
+{% endblock %}
+
+{% block title %}
+<title>Setting</title>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>{% now "jS F Y H:i" %}</h1>
+    <img src="{% static 'img/setting_cover.png' %}" alt="inventory_management_cover">
+</div>
+<div class="report_container">
+    <div class="report">
+        <div>
+        <h1>General Setting</h1>
+        {% if request.user|has_group:"superadmin" %}<div class="select_default_store">
+        <label for="cars">Select Default Store </label><br>
+        <select id="store_option" name="store">
+            {% for item in store_option %}
+            <option value="{{item}}">{{item}}</option>
+            {% endfor %}
+        </select>
+        </div>
+        {% endif %}
+        </div>
+        <div class="icon">
+        <img src="{% static 'img/icon_general_setting.png' %}" alt="Icon General Setting">
+        </div>
+    </div>
+    <div class="report">
+        <div>
+        <h1>Personal Setting</h1>
+        <ul>
+            <li><a onclick="show_div('wrapper_add_category')">Change Password</a></li>
+        </ul>
+        </div>
+        <div class="icon">
+        <img src="{% static 'img/icon_personal_setting.png' %}" alt="Icon Purchase Report">
+        </div>
+    </div>
+    <div class="report">
+        
+    </div>
+    <div class="report">
+        
+    </div>
+</div>
+<div id="wrapper_add_category" class="wrapper_add_category">
+    <div class="add_item" style="height: 400px; width: 330px;">
+        <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Change Password </h3>
+        <div class="item_container">
+        <div>
+            <p> Old Password</p>
+            {{ form.old_password }}
+        </div>
+        <div>
+            <p> New Password </p>
+            {{ form.new_password1 }}
+        </div>
+        <div>
+            <p> Confirm Password</p>
+            {{ form.new_password2}}
+        </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="button_submit"><a id="button_cancel" onclick="show_div('wrapper_add_category')"> Cancel</a><button id="button_submit" action="submit"> Submit </button></div>  
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == 'success' %}
+                <script>    
+                    Swal.fire({
+                    title: "Add Store",
+                    text: "{{ message }}",
+                    icon: "success"
+                    }); window.addEventListener('click',()=>{window.location.href = '/setting/'})
+                </script>
+                {% endif %}
+                {% if message.tags == 'error' %}
+                <script>    
+                    Swal.fire({
+                    title: "Add Store",
+                    text: "{{ message }}",
+                    icon: "error"
+                    }); window.addEventListener('click',()=>{window.location.href = '/setting/'})
+                </script>
+                {% endif %}   
+            {% endfor %}
+        {% endif %}
+    </form>
+    </div>
+</div>
+
+<script defer src="{% static 'js/show_div.js' %}"></script>
+<script defer src="{% static 'js/setting.js' %}"></script>
+
+
+{% endblock %}

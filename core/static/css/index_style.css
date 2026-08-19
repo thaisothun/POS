@@ -1,0 +1,328 @@
+@import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+:root {
+  /* Enables intrinsic size animations for the entire page */
+  interpolate-size: allow-keywords; 
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 450;
+    font-style: normal;
+    --base-color: #1f1e24e0;
+    --accent-color: #7d6dad;
+    --text-color1: #e0e2db;
+    --text-color2: rgb(255, 255, 255);
+    --background1: #36363b;    
+}
+
+body{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    background-image: linear-gradient(to right top, #a3015c, #821d63, #602761, #412a57, #292746, #212a42, #1e2c3c, #212c35, #29373e, #324146, #3c4c4f, #475757);
+
+} 
+
+body input{
+    outline: none;
+    border-radius: 5px;
+}
+
+body select{
+    text-transform: capitalize;
+    border-radius: 5px;
+}
+
+body textarea{
+    border-radius: 5px;
+}
+
+body input:hover{
+    border-color: var(--accent-color);
+    outline: none;
+}
+
+.sidebar-container{
+    background-color: var(--base-color);
+    height: 100vh;
+    width: 370px;
+    padding: 2rem;
+    position: relative;
+    text-wrap: nowrap;   
+    transition: 0.5s ease-in-out;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}
+
+.sidebar-container.close{
+    width: 90px;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.sidebar-container.close a::before{
+    content: attr(content);
+    position: absolute;
+    transform: translateX(100px) translateY(3px);
+    color: var(--text-color1);
+    background-color: var(--accent-color);
+    border-radius: 5px;
+    font-size: 1rem;
+    padding: 0.5rem;
+    opacity: 0;
+    transition: 0.3s ease-in;
+}
+
+.sidebar-container.close a:hover::before{
+    opacity: 1;
+    transform: translateX(70px) translateY(3px);
+}
+
+
+.sidebar-container .sidebar .toggle-sidebar{
+    all:unset;
+    background-color: var(--accent-color);
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    right: -20px;
+    z-index: 9999;
+}
+
+.sidebar-container .sidebar .toggle-sidebar svg{
+    transform-origin:center;
+    transition: 0.5s ease;
+    transform: translateY(5px) translateX(10px);
+    cursor: pointer;
+}
+
+.sidebar-container .toggle-sidebar.rotate svg{
+    transform: translateY(5px) translateX(0px) rotate(180deg);
+    
+}
+
+.sidebar-container .sidebar .logo{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.sidebar-container .sidebar img{
+    width: 40px;
+    height: 40px;
+}
+
+.sidebar-container .sidebar ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-container li{
+    display: grid;
+    font-size: 1rem;
+    color: var(--text-color1);
+    height: 40px;
+    overflow: hidden;
+    grid-template-columns: 50px 120px 30px;
+}
+
+.sidebar-container .sidebar a{
+    text-decoration: none;
+    color: var(--text-color1); 
+    font-size: 1.25rem;
+    color: var(--text-color1);
+    padding: 0.5rem 1rem;
+    transition: 0.2s ease;
+}
+
+.sidebar-container .sidebar span{
+    display: inline-block;
+    transform: translateY(-15px);
+    padding: 1.5rem 1rem;
+}
+
+.sidebar-container .sidebar .logout{
+    position: absolute;
+    bottom: 2rem;
+}
+
+.sidebar-container .sidebar a:hover{
+    background-color: var(--accent-color);
+    border-radius: 10px;
+}
+
+.sidebar-container .sidebar .inventory{
+    height: 0px;
+    overflow: hidden;
+    transition: 0.5s ease-in-out;
+}
+
+.sidebar-container .sidebar .inventory.active{
+    height: auto;
+}
+
+.sidebar-container .sidebar .sale{
+    height: 0px;
+    overflow: hidden;
+    transition: 0.5s ease-in-out;
+}
+
+.sidebar-container .sidebar .sale.active{
+    height: auto;
+}
+
+.sidebar-container .sidebar .purchase{
+    height: 0px;
+    overflow: hidden;
+    transition: 0.5s ease-in-out;
+}
+
+.sidebar-container .sidebar .purchase.active{
+    height: auto;
+}
+
+.sidebar-container .sidebar .people{
+    height: 0px;
+    overflow: hidden;
+    transition: 0.5s ease-in-out;
+}
+
+.sidebar-container .sidebar .people.active{
+    height: auto;
+}
+
+#inventory {
+    padding-left: 4.25rem;
+}
+
+#inventory a{
+    padding: 0.75rem;
+    height: 50px;    
+}
+
+#sale{
+    padding-left: 4.25rem;
+}
+
+#sale a{
+    padding: 0.75rem;
+    height: 50px; 
+}
+
+#purchase{
+    padding-left: 4.25rem;
+}
+
+#purchase a{
+    padding: 0.75rem;
+    height: 50px;
+}
+
+#people{
+    padding-left: 4.25rem;
+}
+
+#people a{
+    padding: 0.75rem;
+    height: 50px;
+}
+
+.arrow {
+    scale: 0.8;
+    padding-left: 0.5rem;
+    
+}
+
+.arrow.active svg{
+    transition: 0.5s ease;
+    transform-origin: center;
+}
+
+.arrow.active svg{
+    transform: rotate(180deg);
+    
+}
+
+.loader_container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.76);
+    opacity: 1;
+    visibility: visible;
+    transition: 0.3s ease-in;
+    transition-delay: 0.3s;
+    z-index: 9999999999;
+}
+
+.loader_container.hide{
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* From Uiverse.io by Z4drus */ 
+.loader {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+
+.loader svg {
+  width: 100%;
+  height: 100%;
+  animation: rotate-svg 2s linear infinite;
+  transform-origin: center center;
+}
+
+.loader-circle {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.circle-1 {
+  stroke-dasharray: 251.3274; /* 2 * π * 40 */
+  stroke-dashoffset: 251.3274;
+  animation: dash-circle1 1.5s cubic-bezier(0.66, 0, 0.34, 1) infinite alternate;
+}
+
+.circle-2 {
+  stroke-dasharray: 188.4956; /* 2 * π * 30 */
+  stroke-dashoffset: 0;
+  animation: dash-circle2 1.5s cubic-bezier(0.66, 0, 0.34, 1) infinite alternate;
+}
+
+@keyframes rotate-svg {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dash-circle1 {
+  0% {
+    stroke-dashoffset: 251.3274;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes dash-circle2 {
+  0% {
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dashoffset: 188.4956;
+  }
+}

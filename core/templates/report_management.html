@@ -1,0 +1,91 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load auth_extras %}
+{% block css %}
+<link rel=stylesheet href="{% static 'css/index_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/item_management_style.css' %}" fetchpriority=high>
+
+{% endblock %}
+
+{% block title %}
+<title>Report Management - Generate</title>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>{% now "jS F Y H:i" %}</h1>
+    <img src="{% static 'img/report_management.png' %}" alt="inventory_management_cover">
+</div>
+<div class="report_container">
+    <div class="report">
+        <div>
+        <h1>Sale Report</h1>
+        <ul>
+            <li><a href="{% url 'report_management_sale_by_invoice' %}">Sale By Invoice</a></li>
+            <li><a href="{% url 'report_management_sale_by_date' %}">Sale By Date </a></li>
+            <li><a href="{% url 'report_management_sale_by_user' %}"> Sale By User </a></li>
+            <li><a href="{% url 'report_management_sale_by_payment_method' %}">Sale By Payment Method</a></li>
+            <li><a href="{% url 'report_management_sale_by_status' %}"> Sale By Invoice status</a></li>
+        </ul>
+        </div>
+        <div class="icon">
+        <img src="{% static 'img/icon_sales_report.png' %}" alt="Icon Sale Report">
+        </div>
+    </div>
+    <div class="report">
+        {% if request.user|has_group:"manager" or request.user|has_group:"superadmin" %}
+        <div>
+        <h1>Purchase Report</h1>
+        <ul>
+            <li><a href="{% url 'report_management_purchase_by_invoice' %}">Purchase By Invoice</a></li>
+            <li><a href="{% url 'report_management_purchase_by_date' %}"> Purchase By Date</a></li>
+            <li><a href="{% url 'report_management_purchase_by_user' %}"> Purchase By User </a></li>
+            <li><a href="{% url 'report_management_purchase_by_payment_method' %}"> Purchase By Payment Method</a></li>
+            <li><a href="{% url 'report_management_purchase_by_status' %}">Purchase By Invoice status</a></li>
+        </ul>
+        </div>
+        <div class="icon">
+        <img src="{% static 'img/Icon_purchase_report.png' %}" alt="Icon Purchase Report">
+        </div>
+        {% endif %}
+    </div>
+    <div class="report">
+        {% if request.user|has_group:"manager" or request.user|has_group:"superadmin" %}
+        <div>
+        <h1>Inventory Report</h1>
+        <ul>
+            <li><a href="{% url 'report_management_inventory_items' %}">Inventory By Item </a></li>
+            <li><a href="{% url 'report_management_inventory_category' %}">Inventory By Category</a></li>
+            <li><a href="{% url 'report_management_inventory_category_low_item'%}">Inventory Low Stock</a></li>
+            <li><a href="{% url 'report_management_inventory_status' %}"> Inventory By status</a></li>
+        </ul>
+        </div>
+        <div class="icon">
+        <img src="{% static 'img/icon_inventory_report.png' %}" alt="Icon Inventory Report">
+        </div>
+        {% endif %}
+    </div>
+    <div class="report">
+        {% if request.user|has_group:"manager" or request.user|has_group:"superadmin" %}
+        <div>
+        <h1>People Report</h1>
+        <ul>
+            <li><a href="{% url 'report_management_customer' %}">Customer</a></li>
+            <li><a href="{% url 'report_management_supplier' %}">Supplier</a></li>
+            <li>User</li>
+        </ul>
+        <h1>Financial Report</h1>
+        <ul>
+            <li><a href="{% url 'report_management_financial' %}">Profit and Loss</a></li>
+        </ul>
+        </div>
+        <div class="icon">
+        <img src="{% static 'img/icon_people_report.png' %}" alt="Icon People Report">
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script defer src="{% static 'js/show_div.js' %}"></script>
+
+{% endblock %}

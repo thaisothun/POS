@@ -1,0 +1,41 @@
+{
+    "LNS10015": {
+        "sale_id": "LNS10015",
+        "status": "Pending"
+    },
+    "LNS-S10134": {
+        "sale_id": "LNS-S10134",
+        "status": "Paid",
+        "payment_method": "Cash"
+    },
+    "LNS-S10133": {
+        "sale_id": "LNS-S10133",
+        "status": "Paid",
+        "payment_method": "Cash"
+    },
+    "LNS-S10128": {
+        "sale_id": "LNS-S10128",
+        "status": "Paid",
+        "payment_method": "Cash"
+    },
+    "LNS10062": {
+        "sale_id": "LNS10062",
+        "status": "Pending",
+        "payment_method": "Cash On Delivery"
+    },
+    "LNS-S10145": {
+        "sale_id": "LNS-S10145",
+        "status": "Paid",
+        "payment_method": "Cash"
+    },
+    "LNS-S10003": {
+        "sale_id": "LNS-S10003",
+        "status": "Paid",
+        "payment_method": "Cash"
+    },
+    "LFS-S10014": {
+        "sale_id": "LFS-S10014",
+        "status": "Pending Delete",
+        "payment_method": "Cash"
+    }
+}

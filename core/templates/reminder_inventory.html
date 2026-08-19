@@ -1,0 +1,58 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block css %}
+<link rel=stylesheet href="{% static 'css/index_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/item_management_style.css' %}" fetchpriority=high>
+
+{% endblock %}
+
+{% block title %}
+<title>Item Management - Order Reminder List</title>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>{% now "jS F Y H:i" %}</h1>
+    <img src="{% static 'img/inventory_management_cover.png' %}" alt="inventory_management_cover">
+</div>
+<div class="search_fliter">
+    <div><form method="POST">
+    <input id="search_box" type="text" placeholder="Search by item name or id">
+    </form>
+    </div>
+    <div><h3>Reorder Alert List</h3></div>
+</div>
+<div class="table">
+    <table>
+        <thead>
+        <tr>
+        <th id="id" class="id" onclick="inventory('id')">ID</th>
+        <th id="name" class="name" onclick="inventory('name')">NAME</th>
+        <th id="store" class="store" onclick="inventory('store')">STORE</th>
+        <th id="category" class="category" onclick="inventory('category')">CATEGORY</th>
+        <th id="size" class="size" onclick="inventory('size')">SIZE</th>
+        <th id="price" class="price" onclick="inventory('price')">PRICE</th>
+        <th id="quantity" class="quantity" onclick="inventory('quantity')">QUANTITY</th>
+        <th id="reorder_alert" class="quantity" onclick="inventory('reorder_alert')">REORDER ALERT</th>
+        
+        </tr>
+    </thead>
+        <tbody id="table_content">
+        {% for item in items %}
+        <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.store }}</td>
+        <td>{{ item.category }}</td>
+        <td>{{ item.size }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.reorder_alert}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script defer src="{% static 'js/reminder_alert.js' %}"></script>
+{% endblock %}

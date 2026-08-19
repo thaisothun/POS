@@ -1,0 +1,303 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block css %}
+<link rel=stylesheet href="{% static 'css/index_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/item_management_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/print_sale_receipt.css' %}" fetchpriority=high>
+
+{% endblock %}
+
+{% block title %}
+<title>Sale Management - Transaction</title>
+{% endblock %}
+
+{% block content %}.
+<div class="header" style="margin-top: -1.5rem;">
+    <h1>{% now "jS F Y H:i" %}</h1>
+    <img src="{% static 'img/sale_transaction_cover.png' %}" alt="photo_sale_transaction_cover">
+</div>
+<div class="sale_transaction_container">
+    <div class="sale_transaction_item"><form method="POST">
+    <h3 style="color: var(--accent-color);">Sale Transaction</h3>
+    <hr>
+    <br>
+    <input id="search_box" type="text" placeholder="Search by item name or id"><br>
+    <br>
+    <span class="category active"><a>All Items</a></span>
+    {% for category in category_item %}
+    <span class="category"><a>{{category.name|title}}</a></span>    
+    {% endfor %}
+    <br>
+        <div class="wrapper_item-card" id="wrapper_item-card">
+        {% for item in items %}
+        <div class="item-card" id="item-card">
+        <div class="content">
+            <p style="position: absolute; padding: 0.5rem; font-size: 1rem; font-weight: 600; ">{{item.price}}</p>
+            <div style="width: 120px; height: 120px; object-fit: cover;"><img style="width: 100%; height: 100%; border-top-left-radius:10px; border-top-right-radius: 10px;" src="{{item.photo.url}}" alt="photo item"></div>    
+        <div style="padding: 0.5rem;">
+        <p>{{item.id}}</p>
+        <p>{{item.name|title}}</p>
+        <p style="display: none;">{{item.cost}}</p>
+        </div>
+        </div>
+        </div>
+        {% endfor %}
+        </div>
+    </form>
+    </div>
+<div style="position: relative;" class="sale_transaction_cart">
+    <h3 style="color: var(--accent-color);">Transaction Detail </h3>
+    <hr>
+    <form id="sale_reset" method="POST" autocomplete="off">
+        {% csrf_token %}
+    <span id="customer_search" style=" display: block; margin-top: 0.5rem;">Customer {{form.customer}} <span onclick="show_div('wrapper_add_customer_sale_transaction')" style="background-color: var(--accent-color); color: white; padding: 0.25rem 0.6rem; border-radius: 5px;">+</span></span>
+    <div style="display: none;">{{form.status}}</div><div style="display: none;">{{form.store}}</div>
+    <div class="customer_search" id="customer_search_toggle">
+        
+    </div>
+    <div class="instruction"><span>Instruction</span>{{form.instruction}}</div>
+    <div class="cart_item">
+        <table>
+            <thead>
+            <tr>
+            <th>PHOTO</th>
+            <th>NAME</th>
+            <th>PRICE</th>
+            <th></th>
+            <th>Qty</th>
+            <th></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody id="cart_item">
+
+            </tbody>
+        </table>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-bottom: 0.5rem;">
+    <div id="promotion_code"><p>Promotion Code</p>{{form.promotion_code}}</div>
+    <div id="discount"><p>Discount %</p>{{form.discount}}</div>
+    <div><p>Payment Method</p>{{form.payment_method}}</div>
+    <div><input type="hidden" id="cart_save_item" name="cart_save_item" value=""></div>
+    </div>
+    <hr>
+    <div class="total">
+        <div>
+            <p>Sub Total</p>
+            <p>Promotion Code</p>
+            <p>Discount </p>
+            <p>Total</p>
+        </div>
+        <div>
+            <p id="sub_total">0.00</p>
+            <p id="promotion_code_amount">0.00</p>
+            <p id="discount_amount">0.00</p>
+            <p id="net_amount">0.00</p>
+        </div>
+    </div>
+    <div style="position: absolute; right: 1rem; font-size: 0.85rem; "><span onclick="clear_cart()" style="background-color: rgb(252, 55, 55); border-radius: 3px; padding: 0.25rem 0.75rem; color: white;">Clear Cart</span><button id="submit" action="submit" style="all:unset; background-color: var(--accent-color); border-radius: 3px; padding: 0.25rem 0.75rem; color: white;cursor: pointer;">Submit</button></div>
+    </form>    
+</div>
+<div class="print_sale_receipt" id="print_sale_receipt">
+    <div class="add_item" style="width: 500px; height: 600px; font-size: 1rem;">
+        <div style="padding: 1rem;" id="print_area" style="width: 500px; height: 600px;">
+            <div style="display: flex; justify-content: space-between;"><span id="sale_receipt_id" style="all:unset;"></span><span id="sale_receipt_date" style="all:unset;"></span></div>
+            <div style="all:unset; display: grid; place-items: center; " class="header">    
+                <img id="sale_receipt_store_logo" style="width: 40px; height: 40px;" src="" alt="logo"><span id="sale_receipt_store" style="all:unset; text-transform: capitalize;"></span>
+                <p id="sale_receipt_store_address"></p>
+            </div>
+            <br>
+            <div class="customer">
+                <p>Customer : <span id="sale_receipt_customer" style="all:unset; text-transform: capitalize; "></span></p>
+                <p>Address: <span id="sale_receipt_customer_address" style="all:unset;text-transform: capitalize"></span></p>
+                <p>Telephone: <span id="sale_receipt_customer_phone" style="all:unset;text-transform: capitalize"></span></p>
+                <p>Instruction: <span id="sale_receipt_instruction" style="all:unset;text-transform: capitalize"></span></p>
+            </div>
+            <div class="item">
+                <table style="padding: 0.5rem; font-size: 1rem; border-bottom: none;">
+                    <thead style="background-color: white; color: black; border-top: 1px solid black;border-bottom: 1px solid black; padding: 0.5rem;">
+                        <tr style="background-color: white; color: black; padding: 0.5rem;">
+                        <th style="background-color: white; color: black; padding: 0.5rem;">Qty</th>
+                        <th style="background-color: white; color: black; padding: 0.5rem;">NAME</th>
+                        <th style="background-color: white; color: black; padding: 0.5rem;">PRICE</th>
+                        <th style="background-color: white; color: black; padding: 0.5rem;">TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sale_receipt_print">
+
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            <div style="display: grid; grid-template-columns: 65% 1fr; justify-items: end; text-align: end;" class="total">
+                <div>
+                    <p>Sub Total</p>
+                    <p>Promotion Code</p>
+                    <p>Discount </p>
+                    <p>Total</p>
+                    <p>Payment by</p>
+                </div>
+                <div>
+                    <p id="sub_total_receipt">0.00</p>
+                    <p id="promotion_code_amount_receipt">0.00</p>
+                    <p id="discount_amount_receipt">0.00</p>
+                    <p id="net_amount_receipt">0.00</p>
+                    <p id="payment_method_receipt"></p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="button_submit"><button id="button_cancel" onclick="show_div('print_sale_receipt')"> Cancel</button><button onclick="print_sale_receipt()" id="button_submit" action="submit"> Print </button></div>  
+    </div>
+        {% if messages %}
+            {% for message in messages %}
+                {% if "error" in message.tags %}
+                <script>
+                    Swal.fire({
+                    title: "Sale Record",
+                    text: "{{ message }}",
+                    icon: "error"
+                    });
+                    document.getElementById('sale_reset').reset()
+                </script>
+                {% endif %}
+                {% if "success" in message.tags %}
+                <script>
+                    Swal.fire({
+                    title: "Sale Record",
+                    text: "{{ message }}",
+                    icon: "success",
+                    confirmButtonText: 'Ok'
+                    })
+                    .then((result)=>{ 
+                        if (result.isConfirmed) {
+                        function getCookie(name) {
+                        let cookieValue = null;
+                        if (document.cookie && document.cookie !== '') {
+                            const cookies = document.cookie.split(';');
+                            for (let i = 0; i < cookies.length; i++) {
+                                const cookie = cookies[i].trim();
+                                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                    break;
+                                }
+                            }
+                        }
+                        return cookieValue;
+                    }
+                    const option = {
+                                    year: 'numeric', 
+                                    month: 'long', 
+                                    day: 'numeric', 
+                                    hour: 'numeric', 
+                                    minute: 'numeric',   
+                                    };
+                    async function send_get_data() {
+                    const sale_receipt_div = document.getElementById('print_sale_receipt')
+                    sale_receipt_div.classList.toggle('show')
+                    const data_send = {id : ''}
+                        try {
+                        const response = await fetch('/sale/sale-transaction/print-receipt/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': getCookie('csrftoken') // Embedded directly in a Django template
+                            },
+                        body: JSON.stringify(data_send)
+                        });
+                        if (!response.ok) throw new Error('Network response was not ok');
+                        const data = await response.json();
+                        data.sale_id.forEach((item)=>{
+                            document.getElementById('sale_receipt_id').innerHTML = `No. ${item.invoice_number}`
+                            document.getElementById('sale_receipt_date').innerHTML = new Date(item.transaction_date).toLocaleString('en-us',option).replace(' at ', ', ')
+                            document.getElementById('sale_receipt_store_logo').src = `/media/${item.store__logo}`
+                            document.getElementById('sale_receipt_store').innerHTML = item.store__name
+                            document.getElementById('sale_receipt_store_address').innerHTML = item.store__address
+                            document.getElementById('sale_receipt_customer').innerHTML = `${item?.customer__first_name} ${item?.customer__last_name}`
+                            document.getElementById('sale_receipt_customer_address').innerHTML = item?.customer__address
+                            if (item.customer__phone_number1){
+                            document.getElementById('sale_receipt_customer_phone').innerHTML = item.customer__phone_number1.match(/.{1,3}/g).join(' ');}else{document.getElementById('sale_receipt_customer_phone').innerHTML = ''}
+                            document.getElementById('sub_total_receipt').innerHTML = item.total_amount
+                            document.getElementById('promotion_code_amount_receipt').innerHTML = item.promotion_code__amount_discount
+                            document.getElementById('discount_amount_receipt').innerHTML = (item.discount * item.total_amount)/100
+                            document.getElementById('net_amount_receipt').innerHTML = item.net_amount
+                            document.getElementById('payment_method_receipt').innerHTML = item.payment_method
+                            document.getElementById('sale_receipt_instruction').innerHTML = item.instruction
+                        })
+                        const sale_receipt_item_print = document.getElementById('sale_receipt_print')
+                        sale_receipt_item_print.replaceChildren()
+                        data.sale_item.forEach((item)=>{
+                            rowHtml = `<tr><td style="padding: 0.5rem; border-bottom: none;">${item.quantity}</td><td style="padding: 0.5rem; border-bottom: none;">${item.item__name}</td><td style="padding: 0.5rem; border-bottom: none;">${item.unit_price}</td><td style="padding: 0.5rem; border-bottom: none;">${item.total_price}</td></tr>`
+                            sale_receipt_item_print.insertAdjacentHTML("beforeend", rowHtml);    
+                        })
+                        } catch (error) {
+                        console.error('Fetch error:', error);}
+                    }
+                    send_get_data()}
+                    })                
+                </script>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+</div>
+<div id="wrapper_add_customer_sale_transaction" class="wrapper_add_customer_sale_transaction">
+    <div class="add_item">
+        <form id="form_add_customer">
+        {% csrf_token %}
+        <h3>Add Customer</h3>
+        <div class="item_container">
+        <div>
+            <p>First Name </p>
+            {{ form1.first_name }}
+        </div>
+        <div>
+            <p> Last Name </p>
+            {{ form1.last_name }}
+        </div>
+        <div>
+            <p> Gender </p>
+            {{ form1.gender }}
+        </div>
+        <div>
+            <p> Phone Number 1 </p>
+            {{ form1.phone_number1 }}
+        </div>
+        <div>
+            <p> Phone Number 2 </p>
+            {{ form1.phone_number2 }}
+        </div>
+        <div>
+            <p > E-mail Address </p>
+            {{ form1.e_mail }}
+        </div>
+        <div>
+            <p> Store </p>
+            {{ form1.store }}
+        </div>
+        <div>
+            <p> Membership </p>
+            {{ form1.membership }}
+        </div>
+        <div>
+            <p> Address </p>
+            {{ form1.address }}
+        </div>
+        <div>
+            <p> Note </p>
+            {{ form1.note }}
+            {{form1.status}}
+        </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="button_submit"><button id="button_cancel" onclick="show_div('wrapper_add_customer_sale_transaction')"> Cancel</button><button id="button_submit" action="submit"> Submit </button></div>  
+    </form>
+    </div>
+</div>
+<script defer src="{% static 'js/sale_transaction.js' %}"></script>
+<script defer src="{% static 'js/show_div.js' %}"></script>
+{% endblock content %}

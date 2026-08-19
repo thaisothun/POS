@@ -1,0 +1,130 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block css %}
+<link rel=stylesheet href="{% static 'css/index_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/item_management_style.css' %}" fetchpriority=high>
+
+{% endblock %}
+
+{% block title %}
+<title>Item Management - Category</title>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>{% now "jS F Y H:i" %}</h1>
+    <img src="{% static 'img/inventory_management_cover.png' %}" alt="inventory_management_cover">
+</div>
+<div class="search_fliter">
+    <div><form method="POST">
+    <input id="search_box" type="text" placeholder="Search by item name or id">
+    {% for item in items %}
+    <input type="hidden" id="category_sort" value="{{item.category}}">
+    {% endfor %}
+    </form>
+    </div>
+</div>
+<div class="table">
+    <table>
+        <thead>
+        <tr>
+        <th id="id" class="id" onclick="inventory('id')">ID</th>
+        <th id="name" class="name" onclick="inventory('name')">NAME</th>
+        <th id="store" class="store" onclick="inventory('store')">STORE</th>
+        <th id="category" class="category" onclick="inventory('category')">CATEGORY</th>
+        <th id="size" class="size" onclick="inventory('size')">SIZE</th>
+        <th id="price" class="price" onclick="inventory('price')">PRICE</th>
+        <th id="quantity" class="quantity" onclick="inventory('quantity')">QUANTITY</th>
+        <th id="reorder_alert" class="quantity" onclick="inventory('reorder_alert')">REORDER ALERT</th>
+        <th>ACTION</th>
+        </tr>
+    </thead>
+        <tbody id="table_content">
+        {% for item in items %}
+        <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.name}}</td>
+        <td>{{ item.store }}</td>
+        <td>{{ item.category }}</td>
+        <td>{{ item.size }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.reorder_alert}}</td>
+        <td><a title="Edit {{item.id}}" href="javascript:void(0)" id="more_action" onclick="get_inventory('wrapper_modify_item','{{item.id}}')"> <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="black"><path d="M218.57-421.33q-24.24 0-41.4-17.26Q160-455.86 160-480.09q0-24.24 17.26-41.41 17.26-17.17 41.5-17.17t41.41 17.26q17.16 17.27 17.16 41.5 0 24.24-17.26 41.41-17.26 17.17-41.5 17.17Zm261.34 0q-24.24 0-41.41-17.26-17.17-17.27-17.17-41.5 0-24.24 17.26-41.41 17.27-17.17 41.5-17.17 24.24 0 41.41 17.26 17.17 17.27 17.17 41.5 0 24.24-17.26 41.41-17.27 17.17-41.5 17.17Zm261.33 0q-24.24 0-41.41-17.26-17.16-17.27-17.16-41.5 0-24.24 17.26-41.41 17.26-17.17 41.5-17.17t41.4 17.26Q800-504.14 800-479.91q0 24.24-17.26 41.41-17.26 17.17-41.5 17.17Z"/></svg></a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div id="wrapper_modify_item" class="wrapper_modify_item">
+    <div class="add_item">
+    <form id="form_update" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Modify Product ID <span style="all:unset" id="item_id"></span> </h3>
+        <div class="item_container">   
+        <div id="product_name" class="product_name">
+            <p>Product Name </p>
+            {{ form.name }}
+        </div>
+        <div id="barcode_number" class="barcode_number">
+            <p> Barcode Number </p>
+            {{ form.barcode_number }}
+        </div>
+        <div id="item_dscription" class="item_escription">
+            <p> Item Description </p>
+            {{ form.description }}
+        </div>
+        <div id="item_store" class="item_select">
+            <p> Store </p>
+            {{ form.store }}
+        </div>
+        <div id="item_category" class="item_select">
+            <p> Category </p>
+            {{ form.category }}
+        </div>
+        <div id="item_unit" class="item_select">
+            <p> Unit </p>
+            {{ form.unit }}
+        </div>
+        <div id="item_size" class="item_select">
+            <p > Size </p>
+            {{ form.size }}
+        </div>
+        <div id="item_price" class="item_price">
+            <p> Price </p>
+            {{ form.price }}
+        </div>
+        <div id="item_cost" class="item_cost">
+            <p> Cost </p>
+            {{ form.cost }}
+        </div>
+        <div id="item_reorder_alert" class="item_cost">
+            <p> Reorder Alert </p>
+            {{ form.reorder_alert }}
+        </div>
+        <div class="break">
+
+        </div>
+        <div id="item_photo" class="item_photo">
+            <img src="" alt="product photo">
+        </div>
+        <div id="item_photo_file" class="item_photo">
+            <p> Item Photo </p>
+            {{ form.photo }}
+            {{form.status}}
+        </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="button_submit"><a id="button_cancel" onclick="show_div('wrapper_modify_item')"> Cancel</a><button id="button_submit" action="submit"> Submit </button></div>  
+        <input type="hidden" name="product_id" id="product_id_value">
+    </form>
+    </div>
+</div>
+
+<script defer src="{% static 'js/show_div.js' %}"></script>
+<script defer src="{% static 'js/category_filter.js' %}"></script>
+
+{% endblock %}

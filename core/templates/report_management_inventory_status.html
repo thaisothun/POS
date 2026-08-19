@@ -1,0 +1,53 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block css %}
+<link rel=stylesheet href="{% static 'css/index_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/report_management.css' %}" fetchpriority=high>
+
+{% endblock %}
+
+{% block title %}
+<title>Report Management - Inventory Status Generate</title>
+{% endblock %}
+
+{% block content %}
+<div class="report_content" id="report_content">
+    <small>{% now "jS F Y H:i" %}</small>
+    <h1>Inventory Report By Status</h1>
+    <h1 id="date"></h1>
+    <div class="option" id="option">
+        <input type="radio" id="all" name="filter_option" value="all" checked>
+        <label for="all">All Period</label>
+        <input type="radio" id="filter" name="filter_option" value="filter">
+        <label for="filter">Filter Date</label>
+    </div>
+    <div class="fliter"><div><span> Start Date</span><input id="start_date" type="date"><span> End Date</span><input id="end_date" type="date"></div><button id="generate">Generate Report</button></div>
+    <div class="selection" id="selection"><span>Status</span>{{form.status}}</div>
+    <hr style="margin: 0 2rem;">
+    <div class="print"><button id="excel">Excel</button><button id="print" onclick="window.print()">Print</button></div>
+    <table>
+        <thead>
+        <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>STORE</th>
+        <th>CATEGORY</th>
+        <th>SIZE</th>
+        <th>PRICE</th>
+        <th>QUANTITY</th>
+        <th>TOTAl</th>
+        <th>REORDER ALERT</th>
+        <th>CREATED DATE</th>
+        </tr>
+    </thead>
+        <tbody id="table_content">
+        
+        </tbody>
+    </table>
+</div>
+
+<script defer src="{% static 'js/show_div.js' %}"></script>
+<script defer src="{% static 'js/report_management_inventory_status.js' %}"></script>
+
+{% endblock %}

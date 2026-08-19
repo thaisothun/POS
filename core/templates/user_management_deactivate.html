@@ -1,0 +1,139 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block css %}
+<link rel=stylesheet href="{% static 'css/index_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/item_management_style.css' %}" fetchpriority=high>
+
+{% endblock %}
+
+{% block title %}
+<title>User Management - Deactivate</title>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>{% now "jS F Y H:i" %}</h1>
+    <img src="{% static 'img/customer_management_cover.png' %}" alt="inventory_management_cover">
+</div>
+<div class="search_fliter">
+    <div><form method="POST">
+    <input id="search_box" type="text" placeholder="Search by username or full name"><button id="button_search" type="submit">Search</button>
+    </form>
+    </div>
+</div>
+<div class="table">
+    <table>
+        <thead>
+        <tr>
+        <th id="store" class="store" onclick="customer('store')">STORE</th>
+        <th id="username" class="username" onclick="customer('username')">USERNAME</th>
+        <th id="first_name" class="first_name" onclick="customer('first_name')">FIRST NAME</th>
+        <th id="last_name" class="last_name" onclick="customer('last_name')">LAST NAME</th>
+        <th id="gender" class="gender" onclick="customer('gender')">GENDER</th>
+        <th id="date_of_brith" class="date_of_brith" onclick="customer('date_of_brith')">DATE of BIRTH</th>
+        <th id="phone_number" class="phone_number" onclick="customer('phone_number')">PHNOE NUMBER</th>
+        <th id="group" class="group" onclick="customer('group')">GROUP</th>
+        <th id="created_on" class="created_on" onclick="customer('created_on')">JOINT DATE</th>
+        <th id="status" class="status" onclick="customer('status')">STATUS</th>
+        <th>ACTION</th>
+        </tr>
+    </thead>
+        <tbody id="table_content">
+        {% for item in users %}
+        <tr>
+        <td>{{ item.userprofile.store}}</td>
+        <td style="text-transform: none;">{{ item.username }}</td>
+        <td>{{ item.first_name }}</td>
+        <td>{{ item.last_name}}</td>
+        <td>{{ item.userprofile.gender }}</td>
+        <td>{{item.userprofile.date_of_brith}}</td>
+        <td>{{ item.userprofile.phone_number}}</td>
+        <td>{{ item.userprofile.group}}</td>
+        <td>{{ item.userprofile.created_on | date:"F j, Y"}}</td>
+        <td>{{ item.userprofile.status}}</td>
+        <td><a title="Edit {{item.username}}" href="javascript:void(0)" id="more_action" onclick="get_user('wrapper_modify_user','{{item.username}}')"> <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="black"><path d="M218.57-421.33q-24.24 0-41.4-17.26Q160-455.86 160-480.09q0-24.24 17.26-41.41 17.26-17.17 41.5-17.17t41.41 17.26q17.16 17.27 17.16 41.5 0 24.24-17.26 41.41-17.26 17.17-41.5 17.17Zm261.34 0q-24.24 0-41.41-17.26-17.17-17.27-17.17-41.5 0-24.24 17.26-41.41 17.27-17.17 41.5-17.17 24.24 0 41.41 17.26 17.17 17.27 17.17 41.5 0 24.24-17.26 41.41-17.27 17.17-41.5 17.17Zm261.33 0q-24.24 0-41.41-17.26-17.16-17.27-17.16-41.5 0-24.24 17.26-41.41 17.26-17.17 41.5-17.17t41.4 17.26Q800-504.14 800-479.91q0 24.24-17.26 41.41-17.26 17.17-41.5 17.17Z"/></svg></a> <a title="Activate Customer {{item.username}}" href="javascript:void(0)" id="activate" onclick="show_div('wrapper_delete_customer','{{item.username}}' )" ><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#434343"><path d="M440-160v-326L336-382l-56-58 200-200 200 200-56 58-104-104v326h-80ZM160-600v-120q0-33 23.5-56.5T240-800h480q33 0 56.5 23.5T800-720v120h-80v-120H240v120h-80Z"/></svg></a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="wrapper_delete_customer" id="wrapper_delete_customer">    
+    <div class="delete_item" style="width: 320px;">
+        <form id="form_activate">
+            {% csrf_token %}
+        <h3>Activate User</h3>
+        <div>
+        <p>The user <span id="product_id"></span> will be activated.</p>
+        <input type="hidden" name="product_id" id="product_id_value">
+        </div>
+        <div class="button_submit"><span id="button_cancel_delete_item" onclick="show_div('wrapper_delete_customer')"> Cancel</span><button id="button_submit_delete_item"> Submit </button></div>  
+        </form>
+    </div>
+</div>
+<div id="wrapper_modify_user" class="wrapper_modify_user">
+    <div class="add_item">
+    <form id="form_update" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Modify User<span style="all:unset" id="item_id"></span> </h3>
+        <div class="item_container">   
+        <div id="modify_username">
+            <p>Username </p>
+            {{ form_update.username }}
+        </div>
+        <div id="modify_group">
+            <p>Group </p>
+            {{ form1.group }}
+        </div>
+        <div id="modify_first_name">
+            <p>First Name </p>
+            {{ form_update.first_name }}
+        </div>
+        <div id="modify_last_name">
+            <p> Last Name </p>
+            {{ form_update.last_name }}
+        </div>
+        <div id="modify_gender">
+            <p> Gender </p>
+            {{ form1.gender }}
+        </div>
+        <div id="modify_date_of_birth">
+            <p> Date of Birth </p>
+            {{ form1.date_of_brith }}
+        </div>
+        <div id="modify_phone_number">
+            <p> Phone Number</p>
+            {{ form1.phone_number }}
+        </div>
+        <div id="modify_email">
+            <p > E-mail Address </p>
+            {{ form_update.email }}
+        </div>
+        <div id="modify_store">
+            <p> Store </p>
+            {{ form1.store }}
+        </div>
+        <div id="modify_address">
+            <p> Address </p>
+            {{ form1.address }}
+        </div>
+        <div>
+            <div id="modify_profile_photo" class="item_photo">
+            <img style="width: 20%;" src="" alt="product photo">
+        </div>
+            <p> Profile Photo </p>
+            {{ form1.image_profile }}
+        </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="button_submit"><a id="button_cancel" onclick="show_div('wrapper_modify_user')"> Cancel</a><button id="button_submit" action="submit"> Submit </button></div>  
+        <input type="hidden" name="product_id" id="product_id_value">
+    </form>
+    </div>
+</div>
+
+<script defer src="{% static 'js/show_div.js' %}"></script>
+<script defer src="{% static 'js/user_management_deactivate.js' %}"></script>
+{% endblock content %}

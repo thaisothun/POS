@@ -1,0 +1,58 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block css %}
+<link rel=stylesheet href="{% static 'css/index_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/report_management.css' %}" fetchpriority=high>
+
+{% endblock %}
+
+{% block title %}
+<title>Report Management - Low Item</title>
+{% endblock %}
+
+{% block content %}
+<div class="report_content" id="report_content">
+    <small>{% now "jS F Y H:i" %}</small>
+    <h1>Invemtory Report By Low Item</h1>
+    <br>
+    <hr style="margin: 0 2rem;">
+    <div class="print"><button id="excel">Excel</button><button id="print" onclick="window.print()">Print</button></div>
+    <table>
+        <thead>
+        <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>STORE</th>
+        <th>CATEGORY</th>
+        <th>SIZE</th>
+        <th>PRICE</th>
+        <th>QUANTITY</th>
+        <th>TOTAl</th>
+        <th>REORDER ALERT</th>
+        <th>CREATED DATE</th>
+        </tr>
+        </thead>
+        <tbody id="table_content">
+        {% for item in items %}
+        <tr>
+        <td>{{item.id}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.store}}</td>
+        <td>{{item.category}}</td>
+        <td>{{item.size}}</td>
+        <td>{{item.price}}</td>
+        <td>{{item.quantity}}</td>
+        <td>{{item.total_price}}</td>
+        <td>{{item.reorder_alert}}</td>
+        <td>{{item.update_on}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>    
+    </table>
+</div>
+
+<script defer src="{% static 'js/show_div.js' %}"></script>
+<script defer src="{% static 'js/report_management_inventory_low_items.js' %}"></script>
+
+{% endblock %}

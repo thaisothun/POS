@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel=stylesheet href="{% static 'css/index_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/item_management_style.css' %}" fetchpriority=high>
+    <title>Page Restricted - Please Contact System Adminstrator</title>
+</head>
+<body style="display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: white; background-image: none; ">
+    <img src="{% static 'img/403_code.png' %}" alt="403 Status Code Photo">
+    <button id="button_submit" onclick="history.back()"> Go Back </button>
+</body>
+</html>

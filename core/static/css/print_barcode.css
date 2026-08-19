@@ -1,0 +1,25 @@
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    
+    #print-barcode{
+        background-color: white;
+    }
+
+    #print-barcode-area, #print-barcode-area *{
+        visibility: visible;
+    }
+
+    #print-barcode-area{
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: white;
+    }
+
+    span{
+        white-space: nowrap;
+        overflow: hidden;
+    }
+}

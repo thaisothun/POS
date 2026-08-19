@@ -1,0 +1,224 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block css %}
+<link rel=stylesheet href="{% static 'css/index_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/item_management_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/print_sale_receipt.css' %}" fetchpriority=high>
+
+{% endblock %}
+
+{% block title %}
+<title>Sale Management - Promotion Code</title>
+{% endblock %}
+
+{% block content %}.
+<div class="header" style="margin-top: -1.5rem;">
+    <h1>{% now "jS F Y H:i" %}</h1>
+    <img src="{% static 'img/sale_transaction_cover.png' %}" alt="photo_sale_transaction_cover">
+</div>
+<div class="search_fliter">
+    <div><form method="POST">
+    <input id="search_box" type="text" placeholder="Search by invoice number or name"><button id="button_search" type="submit">Search</button>
+    </form>
+    </div>
+    <div class="fliter_date" style="font-size: 0.85rem; color: var(--accent-color); position: relative;z-index: 2;"><span style="color: var(--text-color2);">From   </span><input id="date_from" type="date"><span style="color: var(--text-color2);">   To   </span><input id="date_to" type="date"></div>    
+</div>
+<div class="table">
+    <table>
+        <thead>
+        <tr>
+        <th id="transaction_date" class="transaction_date" onclick="sale_transaction('transaction_date')">DATE</th>
+        <th id="store" class="store" onclick="sale_transaction('store')">STORE</th>
+        <th id="invoice_number" class="invoice_number" onclick="sale_transaction('invoice_number')">INVOICE No.</th>
+        <th id="user" class="user" onclick="sale_transaction('user')">USER</th>
+        <th id="customer" class="customer" onclick="sale_transaction('customer')">CUSTOMER</th>
+        <th id="total_amount" class="total_amount" onclick="sale_transaction('total_amount')">TOTAL</th>
+        <th id="promotion_code" class="promotion_code" onclick="sale_transaction('promotion_code')">PROMOTION CODE</th>
+        <th id="discount" class="discount" onclick="sale_transaction('discount')">DISCOUNT</th>
+        <th id="net_amount" class="net_amount" onclick="sale_transaction('net_amount')">NET TOTAL</th>
+        <th id="payment_method" class="payment_method" onclick="sale_transaction('payment_method')">PAYMENT METHOD</th>
+        <th id="status" class="status" onclick="sale_transaction('status')">STATUS</th>
+        </tr>
+    </thead>
+        <tbody id="table_content">
+        {% for item in items %}
+        <tr>
+        <td>{{ item.transaction_date }}</td>
+        <td>{{ item.store}}</td>
+        <td>{{ item.invoice_number }}</td>
+        <td>{{ item.user }}</td>
+        <td>{{ item.customer }}</td>
+        <td>{{ item.total_amount }}</td>
+        <td>{{ item.promotion_code }}</td>
+        <td>{{ item.discount}}</td>
+        <td>{{ item.net_amount}}</td>
+        <td>{{ item.payment_method}}</td>
+        <td>{{ item.status}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="print_sale_receipt" id="print_sale_receipt">
+    <div class="add_item" style="width: 500px; height: 600px; font-size: 1rem;">
+        <div style="padding: 1rem;" id="print_area" style="width: 500px; height: 600px;">
+            <div style="display: flex; justify-content: space-between;"><span id="sale_receipt_id" style="all:unset;"></span><span id="sale_receipt_date" style="all:unset;"></span></div>
+            <div style="all:unset; display: grid; place-items: center; " class="header">    
+                <img style="width: 40px; height: 40px;" src="{% static 'img/logo.jpg' %}" alt="logo"><span id="sale_receipt_store" style="all:unset; text-transform: capitalize;"></span>
+                <p>Phnom Penh</p>
+            </div>
+            <br>
+            <div class="customer">
+                <p>Customer : <span id="sale_receipt_customer" style="all:unset; text-transform: capitalize; "></span></p>
+                <p>Address: <span id="sale_receipt_customer_address" style="all:unset;text-transform: capitalize"></span></p>
+                <p>Telephone: <span id="sale_receipt_customer_phone" style="all:unset;text-transform: capitalize"></span></p>
+                <p>Instruction: <span id="sale_receipt_instruction" style="all:unset;text-transform: capitalize"></span></p>
+            </div>
+            <div class="item">
+                <table style="padding: 0.5rem; font-size: 1rem; border-bottom: none;">
+                    <thead style="background-color: white; color: black; border-top: 1px solid black;border-bottom: 1px solid black; padding: 0.5rem;">
+                        <tr style="background-color: white; color: black; padding: 0.5rem;">
+                        <th style="background-color: white; color: black; padding: 0.5rem;">Qty</th>
+                        <th style="background-color: white; color: black; padding: 0.5rem;">NAME</th>
+                        <th style="background-color: white; color: black; padding: 0.5rem;">PRICE</th>
+                        <th style="background-color: white; color: black; padding: 0.5rem;">TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sale_receipt_print">
+
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            <div style="display: grid; grid-template-columns: 65% 1fr; justify-items: end; text-align: end;" class="total">
+                <div>
+                    <p>Sub Total</p>
+                    <p>Promotion Code</p>
+                    <p>Discount </p>
+                    <p>Total</p>
+                    <p>Payment by</p>
+                </div>
+                <div>
+                    <p id="sub_total_receipt">0.00</p>
+                    <p id="promotion_code_amount_receipt">0.00</p>
+                    <p id="discount_amount_receipt">0.00</p>
+                    <p id="net_amount_receipt">0.00</p>
+                    <p id="payment_method_receipt"></p>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="button_submit"><button id="button_cancel" onclick="show_div('print_sale_receipt')"> Cancel</button><button onclick="print_sale_receipt()" id="button_submit" action="submit"> Print </button></div>  
+    </div>        
+</div>
+<div class="wrapper_delete_item" id="wrapper_delete_item">    
+    <div class="delete_item" style="width: 320px;" >
+        <form id="form_delete_invoice">
+            {% csrf_token %}
+        <h3>Delete Sale Invoice</h3>
+        <div>
+        <p>The Invoice Number <span id="product_id"></span> will be submitted for approval.</p>
+        <input type="hidden" name="product_id" id="product_id_value">
+        </div>
+        <div class="button_submit"><span id="button_cancel_delete_item" onclick="show_div('wrapper_delete_item')"> Cancel</span><button id="button_submit_delete_item"> Submit </button></div>  
+        </form>
+    </div>
+</div>
+<div class="wrapper_paid_invoice" id="wrapper_paid_invoice">    
+    <div style="position: relative; width: 480px; height: 700px;" class="sale_transaction_cart">
+    <h3 style="color: var(--accent-color);">Transaction Detail</h3>
+    <hr>
+    <p > Invoice No. <span id="invoice_number_edit"></span><sapan style="display: none;" id="invoice_number_id_edit"></sapan></p>
+    <input id="payment_method_condition" type="hidden" value="">
+    <div id="customer_search" style=" display: block; margin-top: 0.5rem; margin-bottom: 1rem; position: relative;"><span id="customer_name"> Customer : </span> <span style="position: absolute; right: 0; background-color: var(--accent-color); cursor: pointer; padding: 0.25rem 0.5rem; border-radius: 5px; color: var(--text-color2); font-size: 0.75rem;" onclick="show_div('wrapper_paid_invoice_add')"> Add Item </span></div>
+    <div class="customer_search" id="customer_search_toggle">
+        <ul id="customer_search_display">
+            
+        </ul>
+    </div>
+    <div class="cart_item">
+        <table>
+            <thead>
+            <tr>
+            <th>PHOTO</th>
+            <th>NAME</th>
+            <th>PRICE</th>
+            <th></th>
+            <th>Qty</th>
+            <th></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody id="cart_item">
+
+            </tbody>
+        </table>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem; margin-bottom: 0.5rem;">
+    <div id="promotion_code_edit"><p>Promotion Code</p>{{form.promotion_code}}</div>
+    <div id="discount_edit"><p>Discount %</p>{{form.discount}}</div>
+    <div id="payment_method_edit"><p>Payment Method</p>{{form.payment_method}}</div>
+    <div><input type="hidden" id="cart_save_item" name="cart_item" value=""></div>
+    </div>
+    <hr>
+    <div class="total">
+        <div>
+            <p>Sub Total</p>
+            <p>Promotion Code</p>
+            <p>Discount </p>
+            <p>Total</p>
+        </div>
+        <div>
+            <p id="sub_total_edit">0.00</p>
+            <p id="promotion_code_amount_edit">0.00</p>
+            <p id="discount_amount_edit">0.00</p>
+            <p id="net_amount_edit">0.00</p>
+        </div>
+    </div>
+    <div style="position: absolute; right: 1rem; font-size: 0.85rem; margin-top: 0.5rem;"><span onclick="show_div_clear_cart('wrapper_paid_invoice')" style="background-color: rgb(252, 55, 55); margin-right: 0.5rem; border-radius: 3px; cursor: pointer; padding: 0.25rem 0.75rem; color: white;">Cancel</span><button onclick="save_sale_transaction()" style="all:unset;background-color: var(--accent-color); margin-right: 0.5rem; cursor: pointer; border-radius: 3px; padding: 0.25rem 0.75rem; color: white;">Save</button><button onclick="paid_sale_transaction()" id="submit" style="all:unset; background-color: var(--accent-color); border-radius: 3px; padding: 0.25rem 0.75rem; color: white;cursor: pointer;">Paid</button></div>
+     
+</div>
+</div>
+<div class="wrapper_paid_invoice_add" id="wrapper_paid_invoice_add">    
+    <div style="position: relative; width: 900px; height: 800px;" class="sale_transaction_cart">
+    <div class="sale_transaction_container">
+    <div class="sale_transaction_item"><form method="POST">
+    <h3 style="color: var(--accent-color);">Items</h3>
+    <hr>
+    <br>
+    <input id="search_box_item" type="text" placeholder="Search by item name or item code"><br>
+    <br>
+    <span class="category active"><a>All Items</a></span>
+    {% for category in category_item %}
+    <span class="category"><a>{{category.name|title}}</a></span>    
+    {% endfor %}
+    <br>
+        <div class="wrapper_item-card" id="wrapper_item-card">
+        {% for item in items %}
+        <div class="item-card" id="item-card">
+        <div class="content">
+            <p style="position: absolute; padding: 0.5rem; font-size: 1rem; font-weight: 600; ">{{item.price}}</p>
+            <div style="width: 120px; height: 120px; object-fit: cover;"><img style="width: 100%; height: 100%; border-top-left-radius:10px; border-top-right-radius: 10px;" src="{{item.photo.url}}" alt="photo item"></div>    
+        <div style="padding: 0.5rem;">
+        <p>{{item.id}}</p>
+        <p>{{item.name|title}}</p>
+        <p style="display: none;">{{item.cost}}</p>
+        </div>
+        </div>
+        </div>
+        {% endfor %}
+        <a style="position: absolute; bottom: 2rem; right: 2rem; background-color: rgb(252, 55, 55); padding: 0.5rem 1rem; color: var(--text-color2); border-radius: 5px;cursor: pointer;" onclick="show_div('wrapper_paid_invoice_add')" >Cancel</a>
+        </div>
+    </form>
+    </div>
+</div>
+</div>
+</div>
+
+<script defer src="{% static 'js/show_div.js' %}"></script>
+<script defer src="{% static 'js/sale_transaction_promotion_fileter_sale_list.js' %}"></script>
+
+{% endblock content %}

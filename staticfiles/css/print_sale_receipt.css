@@ -1,0 +1,23 @@
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    
+    #print_sale_receipt{
+        background-color: white;
+    }
+
+    #print_area, #print_area *{
+        visibility: visible;
+    }
+
+    #print_area{
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: white;
+        width: 430px;
+    }
+
+    
+}

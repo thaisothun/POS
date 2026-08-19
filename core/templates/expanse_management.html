@@ -1,0 +1,167 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block css %}
+<link rel=stylesheet href="{% static 'css/index_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/item_management_style.css' %}" fetchpriority=high>
+
+{% endblock %}
+
+{% block title %}
+<title>Purchase Management - Expanse</title>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>{% now "jS F Y H:i" %}</h1>
+    <img src="{% static 'img/expanse_management_cover.png' %}" alt="inventory_management_cover">
+</div>
+<div class="search_fliter">
+    <div><form method="POST">
+    <input id="search_box" type="text" placeholder="Search by description or id">
+    </form>
+    </div>
+    <div><a href="javascript:void(0)" onclick="show_div('wrapper_add_item')" id="add"><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#FFFFFF"><path d="M723.33-160v-130h-130v-66.67h130v-130H790v130h130V-290H790v130h-66.67Zm-616.66 40q-27 0-46.84-19.83Q40-159.67 40-186.67v-596.66q0-27 19.83-46.84Q79.67-850 106.67-850h596.66q27 0 46.84 19.83Q770-810.33 770-783.33v230h-66.67V-650H106.67v463.33h550V-120h-550Zm0-596.67h596.66v-66.66H106.67v66.66Zm0 0v-66.66 66.66Z"/></svg> Add</a></div>
+    
+</div>
+<div class="table">
+    <table>
+        <thead>
+        <tr>
+        <th id="id" class="id" onclick="inventory('id')">ID</th>
+        <th id="store" class="store" onclick="inventory('store')">STORE</th>
+        <th id="category" class="category" onclick="inventory('category')">CATEGORY</th>
+        <th id="description" class="description" onclick="inventory('description')">DESCRIPTION</th>
+        <th id="amount" class="amount" onclick="inventory('amount')">AMOUNT</th>
+        <th id="transaction_date" class="amount" onclick="inventory('transaction_date')">DATE</th>
+        <th>ACTION</th>
+        </tr>
+    </thead>
+        <tbody id="table_content">
+        {% for item in items %}
+        <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.store}}</td>
+        <td>{{ item.category }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.amount }}</td>
+        <td>{{ item.transaction_date }}</td>
+        <td><a title="Edit {{item.id}}" href="javascript:void(0)" id="more_action" onclick="get_inventory('wrapper_modify_item','{{item.id}}')"> <svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="black"><path d="M218.57-421.33q-24.24 0-41.4-17.26Q160-455.86 160-480.09q0-24.24 17.26-41.41 17.26-17.17 41.5-17.17t41.41 17.26q17.16 17.27 17.16 41.5 0 24.24-17.26 41.41-17.26 17.17-41.5 17.17Zm261.34 0q-24.24 0-41.41-17.26-17.17-17.27-17.17-41.5 0-24.24 17.26-41.41 17.27-17.17 41.5-17.17 24.24 0 41.41 17.26 17.17 17.27 17.17 41.5 0 24.24-17.26 41.41-17.27 17.17-41.5 17.17Zm261.33 0q-24.24 0-41.41-17.26-17.16-17.27-17.16-41.5 0-24.24 17.26-41.41 17.26-17.17 41.5-17.17t41.4 17.26Q800-504.14 800-479.91q0 24.24-17.26 41.41-17.26 17.17-41.5 17.17Z"/></svg></a>
+            <a title="Delete {{item.id}}" href="javascript:void(0)" id="delete" onclick="show_div('wrapper_delete_item','{{item.id}}')" ><svg xmlns="http://www.w3.org/2000/svg" height="28px" viewBox="0 -960 960 960" width="28px" fill="black"><path d="m366-299.33 114-115.34 114.67 115.34 50-50.67-114-115.33 114-115.34-50-50.66L480-516 366-631.33l-50.67 50.66L430-465.33 315.33-350 366-299.33ZM267.33-120q-27 0-46.83-19.83-19.83-19.84-19.83-46.84V-740H160v-66.67h192V-840h256v33.33h192V-740h-40.67v553.33q0 27-19.83 46.84Q719.67-120 692.67-120H267.33Zm425.34-620H267.33v553.33h425.34V-740Zm-425.34 0v553.33V-740Z"/></svg></a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div id="wrapper_add_item" class="wrapper_add_item">
+    <div class="add_item" style="width: 350px;">
+        <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Add New Expanse </h3>
+        <div class="item_container">
+        <div class="reference_photo">
+            <p>store </p>
+            {{form.store}}
+        </div>
+        <div class="item_select">
+            <p> category </p>
+            {{ form.category }}
+        </div>
+        <div class="item_escription">
+            <p> Expanse Description </p>
+            {{ form.description }}
+        </div>
+        <div class="amount">
+            <p> Amount </p>
+            {{ form.amount }}
+        </div>
+        <div class="item_photo">
+            <p> Reference Photo </p>
+            {{ form.reference_photo }}
+        </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="button_submit"><button id="button_cancel" onclick="show_div('wrapper_add_item')"> Cancel</button><button id="button_submit" action="submit"> Submit </button></div>  
+        {% if messages %}
+            {% for message in messages %}
+                {% if "error" in message.tags %}
+                <script>
+                    Swal.fire({
+                    title: "Sale Record",
+                    text: "{{ message }}",
+                    icon: "error"
+                    }); window.addEventListener('click', ()=>{window.location.href = '/purchase/expanse-management/'}) 
+                </script>
+                {% endif %}
+                {% if "success" in message.tags %}
+                <script>
+                    Swal.fire({
+                    title: "Sale Record",
+                    text: "{{ message }}",
+                    icon: "success",}); window.addEventListener('click', ()=>{window.location.href = '/purchase/expanse-management/'})
+                </script>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </form>
+    </div>
+</div>
+<div class="wrapper_delete_item" id="wrapper_delete_item">    
+    <div class="delete_item" style="width: 320px;">
+        <form id="form_deactivate">
+            {% csrf_token %}
+        <h3>Delete Expanse</h3>
+        <div>
+        <p>The expanse ID number <span id="product_id"></span> will be deleted.</p>
+        <input type="hidden" name="product_id" id="product_id_value">
+        </div>
+        <div class="button_submit"><span id="button_cancel_delete_item" onclick="show_div('wrapper_delete_item')"> Cancel</span><button id="button_submit_delete_item"> Submit </button></div>  
+        </form>
+    </div>
+</div>
+
+<div id="wrapper_modify_item" class="wrapper_modify_item">
+    <div class="add_item" style="width: 400px;">
+    <form id="form_update" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h3>Modify Expanse ID <span style="all:unset" id="item_id"></span> </h3>
+         <div class="item_container">
+        <div class="item_store" id="item_store">
+            <p>store </p>
+            {{ form.store}}
+        </div>
+        <div class="item_category" id="item_category">
+            <p> category </p>
+            {{ form.category }}
+        </div>
+        <div class="item_description" id="item_description">
+            <p> Expanse Description </p>
+            {{ form.description }}
+        </div>
+        <div class="item_amount" id="item_amount">
+            <p> Amount </p>
+            {{ form.amount }}
+        </div>
+        <div class="item_photo">
+            <p> Reference Photo </p>
+            {{ form.reference_photo }}
+        </div>
+        <div id="item_photo" class="item_photo">
+            <a href=""><img src="" alt="product photo"></a>
+        </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="button_submit"><a id="button_cancel" onclick="show_div('wrapper_modify_item')"> Cancel</a><button id="button_submit" action="submit"> Submit </button></div>  
+        <input type="hidden" name="product_id" id="product_id_value">
+    </form>
+    </div>
+</div>
+
+<script defer src="{% static 'js/show_div.js' %}"></script>
+<script defer src="{% static 'js/expanse_management.js' %}"></script>
+
+{% endblock %}

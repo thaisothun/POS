@@ -1,0 +1,81 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block css %}
+<link rel=stylesheet href="{% static 'css/index_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/item_management_style.css' %}" fetchpriority=high>
+<link rel=stylesheet href="{% static 'css/print_barcode.css' %}" fetchpriority=high>
+
+{% endblock %}
+
+{% block title %}
+<title>Item Management - Print Barcode</title>
+{% endblock %}
+
+{% block content %}
+<div class="header">
+    <h1>{% now "jS F Y H:i" %}</h1>
+    <img src="{% static 'img/inventory_management_cover.png' %}" alt="inventory_management_cover">
+</div>
+<div class="search_fliter">
+    <div><form method="POST">
+    <input id="search_box" type="text" placeholder="Search by item name or id">
+    </form>
+    </div>
+    <div><h3>Print Item Barcode </h3></div>
+</div>
+<div class="table">
+    <table>
+        <thead>
+        <tr>
+        <th id="id" class="id" onclick="print_barcode('id')">ID</th>
+        <th id="name" class="name" onclick="print_barcode('name')">NAME</th>
+        <th id="store" class="store" onclick="print_barcode('store')">STORE</th>
+        <th id="category" class="category" onclick="print_barcode('category')">CATEGORY</th>
+        <th id="size" class="size" onclick="print_barcode('size')">SIZE</th>
+        <th id="price" class="price" onclick="print_barcode('price')">PRICE</th>
+        <th id="quantity" class="quantity" onclick="print_barcode('quantity')">QUANTITY</th>
+        <th id="reorder_alert" class="quantity" onclick="print_barcode('reorder_alert')">REORDER ALERT</th>
+        <th>ACTION</th>
+        </tr>
+    </thead>
+        <tbody id="table_content">
+        {% for item in items %}
+        <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.name}}</td>
+        <td>{{ item.store }}</td>
+        <td>{{ item.category }}</td>
+        <td>{{ item.size }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.reorder_alert}}</td>
+        <td><a title="Print Barcode {{item.id}}" href="javascript:void(0)" id="more_action" onclick="print_barcode_item('print-barcode','{{item.id}}' )" ><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#434343"><path d="M640-640v-120H320v120h-80v-200h480v200h-80Zm-480 80h640-640Zm560 100q17 0 28.5-11.5T760-500q0-17-11.5-28.5T720-540q-17 0-28.5 11.5T680-500q0 17 11.5 28.5T720-460Zm-80 260v-160H320v160h320Zm80 80H240v-160H80v-240q0-51 35-85.5t85-34.5h560q51 0 85.5 34.5T880-520v240H720v160Zm80-240v-160q0-17-11.5-28.5T760-560H200q-17 0-28.5 11.5T160-520v160h80v-80h480v80h80Z"/></svg></a></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="print-barcode" id="print-barcode">    
+    <div class="delete_item"  style="width: 300px;">
+        <form id="form_deactivate">
+            {% csrf_token %}
+        <h3>Print Item Barcode</h3>
+        <div id="print-barcode-area">
+        <span id="item-id"></span>
+        <span id="item-name"></span>
+        <span id="item-price"></span>
+        <div id="container-barcode">
+            <img id="item-barcode" src="" alt="photo barcode">
+        </div>
+        </div>
+        <div class="button_submit"><span id="button_cancel_delete_item" onclick="show_div('print-barcode')"> Cancel</span><button id="button_submit_delete_item" onclick="print_barcode1()"> Print </button></div>  
+        </form>
+    </div>
+</div>
+
+<script defer src="{% static 'js/show_div.js' %}"></script>
+<script defer src="{% static 'js/print_barcode.js' %}"></script>
+
+{% endblock %}
