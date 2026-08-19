@@ -30,13 +30,13 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'http://pos-production-397a.up.railway.app',
+    '.railway.app',
     'healthcheck.railway.app',
     'https://point-of-sale.b-cdn.net', # Mandated for Railway internal uptime checks
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://pos-production-397a.up.railway.app',
+    'https://*.railway.app',
     'https://point-of-sale.b-cdn.net',
 ]
 
