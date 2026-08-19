@@ -144,6 +144,7 @@ async function get_user(div_name, username) {
     show_div(div_name)
     const data_send = {username: username}
     try {
+        console.log(media_url)
         const response = await fetch('/user-management/get-user/', {
         method: 'POST',
         headers: {
