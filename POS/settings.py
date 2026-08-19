@@ -28,14 +28,16 @@ SECRET_KEY = 'django-insecure-k&jm&r*qv#)g30dt=le#%=0998r1!uzc0*us#xa!8mn5#9g9!7
 DEBUG = False
 
 ALLOWED_HOSTS = [
-    os.environ.get("RAILWAY_PUBLIC_DOMAIN", "localhost"),
-    "127.0.0.1",
-    "healthcheck.railway.app" # Required so Railway health checks do not throw a 400 error
+    'localhost',
+    '127.0.0.1',
+    '.railway.app',
+    'healthcheck.railway.app', # Mandated for Railway internal uptime checks
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    f"https://{os.environ.get('RAILWAY_PUBLIC_DOMAIN')}"
-] if os.environ.get('RAILWAY_PUBLIC_DOMAIN') else []
+    'https://*.railway.app',
+    'https://pos-production-97d3.up.railway.app/',
+]
 
 # Fixes admin login loop issues over HTTPS proxy terminations
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
