@@ -1,1 +1,1 @@
-web: python manage.py migrate && gunicorn POS.wsgi:application
+web: python manage.py migrate && gunicorn --no-control-socket POS.wsgi:application
