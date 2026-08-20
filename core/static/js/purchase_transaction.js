@@ -43,7 +43,7 @@ category_div.forEach((item)=>{
                 rowHtml_item =  `<div class="item-card id="item-card">
                             <div class="content">
                                 <p style="position: absolute; padding: 0.5rem; font-size: 1rem; font-weight: 600; ">${item.cost}</p>
-                                <div style="width: 120px; height: 120px; object-fit: cover;"><img style="width: 100%; height: 100%; border-top-left-radius:10px; border-top-right-radius: 10px;" src="/media/${item.photo}" alt="photo item"></div>    
+                                <div style="width: 120px; height: 120px; object-fit: cover;"><img style="width: 100%; height: 100%; border-top-left-radius:10px; border-top-right-radius: 10px;" src="${media_url}media/${item.photo}" alt="photo item"></div>    
                             <div style="padding: 0.5rem;">
                             <p>${item.id}</p>
                             <p>${item.name}</p>
@@ -265,7 +265,7 @@ class_active.forEach((item)=>{
                 rowHtml_item =  `<div class="item-card id="item-card">
                             <div class="content">
                                 <p style="position: absolute; padding: 0.5rem; font-size: 1rem; font-weight: 600; ">${item.cost}</p>
-                                <div style="width: 120px; height: 120px; object-fit: cover;"><img style="width: 100%; height: 100%; border-top-left-radius:10px; border-top-right-radius: 10px;" src="/media/${item.photo}" alt="photo item"></div>    
+                                <div style="width: 120px; height: 120px; object-fit: cover;"><img style="width: 100%; height: 100%; border-top-left-radius:10px; border-top-right-radius: 10px;" src="${media_url}media/${item.photo}" alt="photo item"></div>    
                             <div style="padding: 0.5rem;">
                             <p>${item.id}</p>
                             <p>${item.name}</p>
