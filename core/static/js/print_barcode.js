@@ -102,7 +102,7 @@ async function print_barcode_item(div_name,id){
             id.innerHTML = item.id
             name.innerHTML = item.name
             price.innerHTML = `$${item.price}`
-            barcode.setAttribute('src', `/media/${item.barcode_image}`)
+            barcode.setAttribute('src', `${media_url}media/${item.barcode_image}`)
         })
         
     } catch (error) {
