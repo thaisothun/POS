@@ -50,7 +50,7 @@ class Store(models.Model):
     address = models.CharField(max_length=255)
     logo = models.ImageField(upload_to=logo_path, null=True, blank=True)
     sale_target = models.DecimalField(max_digits=10, decimal_places=2, default=20000)
-    created_on = models.DateTimeField(default=timezone.now())
+    created_on = models.DateTimeField(auto_now_add=True)
     is_selected = models.BooleanField(default=False)
     
     class Meta:
@@ -125,7 +125,7 @@ class Inventory(models.Model):
     barcode_number = models.CharField(max_length=13, unique=True, blank=True)
     barcode_image = models.ImageField(upload_to=barcode_path, blank=True)
     reorder_alert = models.IntegerField(default=5)
-    update_on = models.DateTimeField(auto_now=True)
+    update_on = models.DateTimeField(auto_now_add=True)
     status = models.CharField(choices=[('Active','Active'),('Inactive','Inactive')], default='Active')
     objects = SelectedStore()
     class Meta:
