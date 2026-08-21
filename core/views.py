@@ -2048,7 +2048,6 @@ def deactivate_supplier_list(request):
             return redirect ('supplier_management')
     else:
         form = SupplierForm()
-             
     
     context = {
         'items' : items,
