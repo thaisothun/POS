@@ -117,3 +117,50 @@ form_update.addEventListener('submit', async function(e){
         } catch (error) {
         console.error('Fetch error:', error);}
 })
+
+async function get_inventory(div_name, product_id) {
+    show_div(div_name)
+    const data_send = {product_id: product_id}
+    try {
+        const response = await fetch('/get-inventory/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+            },
+        body: JSON.stringify(data_send)
+        });
+        
+        if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json();
+            data.forEach(item=>{
+            const item_id = document.getElementById('item_id')    
+            const name = document.getElementById('product_name')
+            const barcode_number = document.getElementById('barcode_number')
+            const item_dscription =document.getElementById('item_dscription')
+            const store = document.getElementById('item_store')
+            const item_category = document.getElementById('item_category')
+            const item_unit = document.getElementById('item_unit')
+            const item_size = document.getElementById('item_size')
+            const item_price = document.getElementById('item_price')
+            const item_cost = document.getElementById('item_cost')
+            const item_reorder_alert = document.getElementById('item_reorder_alert')
+            const item_photo = document.getElementById('item_photo')
+            item_id.innerHTML = item.id
+            name.children[1].value = item.name
+            barcode_number.children[1].value = item.barcode_number
+            item_dscription.children[1].value = item.description
+            store.children[1].value = item.store
+            item_category.children[1].value = item.category  
+            item_unit.children[1].value = item.unit
+            item_size.children[1].value = item.size  
+            item_price.children[1].value = item.price
+            item_cost.children[1].value = item.cost
+            item_reorder_alert.children[1].value = item.reorder_alert
+            item_photo.children[0].setAttribute('src', `${media_url}media/${item.photo}`)
+        })
+    
+    } catch (error) {
+        console.error('Fetch error:', error);
+    }
+}
