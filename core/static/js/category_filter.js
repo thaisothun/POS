@@ -105,14 +105,14 @@ form_update.addEventListener('submit', async function(e){
                     title: "Update Item",
                     text: data.message_error,
                     icon: "error"
-                    }); window.location.reload();
+                    }); window.addEventListener('click', ()=>{ window.location.reload();})
             }
             if (data.message_sucess){
                 Swal.fire({
                     title: "Update Item",
                     text: data.message_sucess,
                     icon: "success"
-                    }); window.location.reload();
+                    }); window.addEventListener('click', ()=>{ window.location.reload();})
             }
         } catch (error) {
         console.error('Fetch error:', error);}
