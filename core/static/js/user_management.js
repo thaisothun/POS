@@ -144,7 +144,6 @@ async function get_user(div_name, username) {
     show_div(div_name)
     const data_send = {username: username}
     try {
-        console.log(media_url)
         const response = await fetch('/user-management/get-user/', {
         method: 'POST',
         headers: {
@@ -171,6 +170,25 @@ async function get_user(div_name, username) {
             document.getElementById('modify_profile_photo').children[0].src = `${media_url}media/${item.userprofile__image_profile}`    
         })
         
+    } catch (error) {
+        console.error('Fetch error:', error);
+    }
+}
+
+async function reset_password(div_name, username) {
+    show_div(div_name)
+    const data_send = {username: username}
+    try {
+        const response = await fetch('/user-management/get-user/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+            },
+        body: JSON.stringify(data_send)
+        });
+        if (!response.ok) throw new Error('Network response was not ok');
+                    
     } catch (error) {
         console.error('Fetch error:', error);
     }
