@@ -1005,7 +1005,7 @@ def get_sale_transaction(request, id):
         sale_item = list(SaleItem.objects.values('item__photo','item__name','quantity','unit_price','item__id').filter(sale=id))
         for item in sale_item:
             if item['item__photo']:
-                item['item__photo_url'] = f"{settings.MEDIA_URL}/media/{item['item__photo']}"
+                item['item__photo_url'] = f"{settings.MEDIA_URL}media/{item['item__photo']}"
             else:
                  item['item__photo_url'] = None   
         items = {
