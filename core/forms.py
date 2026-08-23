@@ -21,7 +21,7 @@ class UnitForm(forms.ModelForm):
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
-        fields = ['store','first_name','last_name','gender','address','phone_number1','phone_number2','e_mail','membership','note']
+        fields = ['store','first_name','last_name','gender','address','phone_number1','phone_number2','e_mail','membership','note','status']
 
 class InventoryAdjustmentForm(forms.ModelForm):
     class Meta:
@@ -48,7 +48,7 @@ class SaleForm(forms.ModelForm):
 class SupplierForm(forms.ModelForm):
     class Meta:
         model = Supplier
-        fields = ['store','first_name','last_name','gender','address','phone_number1','phone_number2','e_mail','membership','note']        
+        fields = ['store','first_name','last_name','gender','address','phone_number1','phone_number2','e_mail','membership','note','status']        
 
 class PurchaseForm(forms.ModelForm):
     customer = forms.CharField(required=False)
