@@ -178,7 +178,7 @@ async function get_user(div_name, username) {
 const form_reset_password = document.querySelector('#form_reset_password')
 form_reset_password.addEventListener('submit', async function(e){
     e.preventDefault();
-    const item_id = document.getElementById('product_id')
+    const item_id = document.getElementById('username')
     const new_password = document.getElementById('new_password').value
     const data_send = {username: username, new_password: new_password}
     console.log(new_password)
