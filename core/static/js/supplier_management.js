@@ -142,6 +142,7 @@ async function get_customer(div_name, product_id) {
             document.getElementById('item_membership').children[1].value = item.membership
             document.getElementById('item_address').children[1].value = item.address
             document.getElementById('item_note').children[1].value = item.note
+            document.getElementById('item_status').children[1].value = item.status
         })
     } catch (error) {
         console.error('Fetch error:', error);
