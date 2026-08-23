@@ -84,7 +84,7 @@
         {% for item in top_ten_items %}
         <tr style="padding: 0.5rem; font-size: 0.80rem;">
         <td style="padding: 0.5rem; font-size: 0.80rem;">{{ item.range }}</td>
-        <td style="padding: 0.5rem; font-size: 0.80rem;"><img style="width: 25px; height: 25px;" src="{{item.photo.url}}" alt="item photo"></td>
+        <td style="padding: 0.5rem; font-size: 0.80rem;"><img style="width: 25px; height: 25px;" src="{{ MEDIA_URL }}media/{{item.photo}}" alt="item photo"></td>
         <td style="padding: 0.5rem; font-size: 0.80rem;">{{ item.name }}</td>
         <td style="padding: 0.5rem; font-size: 0.80rem;">{{ item.quantity}}</td>       
         {% endfor %}
