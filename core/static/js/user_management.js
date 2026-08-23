@@ -182,6 +182,7 @@ form_deactivate.addEventListener('submit', async function(e){
     const new_password = document.getElementById('new_password').value
     const data_send = {username: username, new_password: new_password}
     console.log(new_password)
+    console.log('ok')
     id = item_id.innerHTML
     try {
         const response = await fetch(`/user-management/deactivate-user/${id}/`, {
