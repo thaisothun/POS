@@ -185,6 +185,7 @@ urlpatterns = [
     path('user-management/deactivate-user-list/sort/', views.user_management_deactivate_user_list_sort, name='user_management_deactivate_user_list_sort'),
     path('user-management/deactivate-user-list/search/', views.user_management_deactivate_user_list_search, name='user_management_deactivate_user_list_search'),
     path('user-management/deactivate-user-list/activate/<str:username>/', views.user_management_activate_user, name='user_management_activate_user'), 
+    path('user-management/deactivate-user-list/reset-password/<str:username>/', views.user_management_reset_password_user, name='user_management_reset_password_user'),
     path('login/', views.login, name='login'),     
     path('logout/', views.logout, name='logout'),
     path('setting/', views.setting, name='setting'),   

@@ -175,24 +175,40 @@ async function get_user(div_name, username) {
     }
 }
 
-async function reset_password(div_name, username) {
-    show_div(div_name)
-    const data_send = {username: username}
+const form_reset_password = document.querySelector('#form_reset_password')
+form_deactivate.addEventListener('submit', async function(e){
+    e.preventDefault();
+    const item_id = document.getElementById('product_id')
+    const new_password = document.getElementById('new_password').value
+    const data_send = {username: username, new_password: new_password}
+    id = item_id.innerHTML
     try {
-        const response = await fetch('/user-management/get-user/', {
+        const response = await fetch(`/user-management/deactivate-user/${id}/`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': getCookie('csrftoken')
+            'X-CSRFToken': getCookie('csrftoken') // Embedded directly in a Django template
             },
         body: JSON.stringify(data_send)
         });
         if (!response.ok) throw new Error('Network response was not ok');
-                    
-    } catch (error) {
-        console.error('Fetch error:', error);
-    }
-}
+            const data = await response.json();
+            if (data.message_sucess){
+                Swal.fire({
+                    title: "Deactivate User",
+                    text: data.message_sucess,
+                    icon: "success"
+                    }); window.addEventListener('click', ()=>{window.location.href = '/user-management/'})
+            }
+            if (data.message_error){
+                Swal.fire({
+                    title: "Deactivate User",
+                    text: data.message_error,
+                    icon: "error"
+                    }); window.addEventListener('click', ()=>{window.location.href = '/user-management/'})
+            }
+        } catch (error) {
+        console.error('Fetch error:', error);}
+    })
 
 const form = document.querySelector('#form_update')
 form.addEventListener('submit', async function(e){
