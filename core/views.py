@@ -3813,6 +3813,8 @@ def user_management_reset_password_user(request, username):
     if request.method == 'POST':
         data = json.loads(request.body)
         new_password = data.get('new_password')
+        print(new_password)
+        print('ok')
         try:
             user = User.objects.get(username=username)
             user.set_password(new_password)
