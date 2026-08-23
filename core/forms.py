@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, Pass
 class InventoryForm(forms.ModelForm):
     class Meta:
         model = Inventory
-        fields = ['name','store','category','description','photo','unit','size','price','cost','barcode_number','reorder_alert']
+        fields = ['name','store','category','description','photo','unit','size','price','cost','barcode_number','reorder_alert','status']
 
 class CategoryForm(forms.ModelForm):
     class Meta:
