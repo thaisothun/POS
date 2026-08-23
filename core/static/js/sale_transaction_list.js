@@ -189,7 +189,7 @@ async function send_get_data(id) {
         data.sale_id.forEach((item)=>{
             document.getElementById('sale_receipt_id').innerHTML = `No. ${item.invoice_number}`
             document.getElementById('sale_receipt_date').innerHTML = new Date(item.transaction_date).toLocaleString('en-us',option).replace(' at ', ', ')
-            document.getElementById('sale_receipt_store_logo').src = `/media/${item.store__logo}`
+            document.getElementById('sale_receipt_store_logo').src = `${media_url}media/${item.store__logo}`
             document.getElementById('sale_receipt_store').innerHTML = item.store__name
             document.getElementById('sale_receipt_store_address').innerHTML = item.store__address
             document.getElementById('sale_receipt_customer').innerHTML = `${item?.customer__first_name} ${item?.customer__last_name}`
@@ -329,7 +329,7 @@ async function get_sale_transaction(div, id, payment_method_condition){
         const item_cart = document.getElementById('cart_item')
             item_cart.replaceChildren()
             cart.forEach((item)=>{
-                rowHtml_cart_item = `<tr><td><img style="width: 52px; height: 52px;" src='${item.photo}'</td><td>${item.name}</td><td><input id="${item.item_id}" style="width: 70px;" type="number" value="${item.unit_price}" onclick="modify_price('${item.item_id}')"></td><td onclick="decrease_item('${item.item_id}')"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#000000"><path d="M232-444v-72h496v72H232Z"/></svg></td><td style=" text-align: center;">${item.quantity}</td><td onclick="increase_item('${item.item_id}')"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#000000"><path d="M444-444H240v-72h204v-204h72v204h204v72H516v204h-72v-204Z"/></svg></td><td onclick="remove_item('${item.item_id}')"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#000000"><path d="M312-144q-29.7 0-50.85-21.15Q240-186.3 240-216v-480h-48v-72h192v-48h192v48h192v72h-48v479.57Q720-186 698.85-165T648-144H312Zm336-552H312v480h336v-480ZM384-288h72v-336h-72v336Zm120 0h72v-336h-72v336ZM312-696v480-480Z"/></svg></td></tr>`
+                rowHtml_cart_item = `<tr><td><img style="width: 52px; height: 52px;" src='${media_url}media/${item.photo}'</td><td>${item.name}</td><td><input id="${item.item_id}" style="width: 70px;" type="number" value="${item.unit_price}" onclick="modify_price('${item.item_id}')"></td><td onclick="decrease_item('${item.item_id}')"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#000000"><path d="M232-444v-72h496v72H232Z"/></svg></td><td style=" text-align: center;">${item.quantity}</td><td onclick="increase_item('${item.item_id}')"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#000000"><path d="M444-444H240v-72h204v-204h72v204h204v72H516v204h-72v-204Z"/></svg></td><td onclick="remove_item('${item.item_id}')"><svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#000000"><path d="M312-144q-29.7 0-50.85-21.15Q240-186.3 240-216v-480h-48v-72h192v-48h192v48h192v72h-48v479.57Q720-186 698.85-165T648-144H312Zm336-552H312v480h336v-480ZM384-288h72v-336h-72v336Zm120 0h72v-336h-72v336ZM312-696v480-480Z"/></svg></td></tr>`
                 item_cart.insertAdjacentHTML("beforeend", rowHtml_cart_item);
             })
         } catch (error) {
