@@ -185,7 +185,7 @@ form_reset_password.addEventListener('submit', async function(e){
     console.log('ok')
     id = item_id.innerHTML
     try {
-        const response = await fetch(`/user-management/deactivate-user/${id}/`, {
+        const response = await fetch(`user-management/reset-password/${id}/`, {
         method: 'POST',
         headers: {
             'X-CSRFToken': getCookie('csrftoken') // Embedded directly in a Django template
