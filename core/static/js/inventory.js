@@ -112,6 +112,7 @@ async function get_inventory(div_name, product_id) {
             const item_cost = document.getElementById('item_cost')
             const item_reorder_alert = document.getElementById('item_reorder_alert')
             const item_photo = document.getElementById('item_photo')
+            const item_status = document.getElementById('item_status')
             item_id.innerHTML = item.id
             name.children[1].value = item.name
             barcode_number.children[1].value = item.barcode_number
@@ -124,6 +125,7 @@ async function get_inventory(div_name, product_id) {
             item_cost.children[1].value = item.cost
             item_reorder_alert.children[1].value = item.reorder_alert
             item_photo.children[0].setAttribute('src', `${media_url}media/${item.photo}`)
+            item_status.children[1].value = item.status
         })
     
     } catch (error) {
