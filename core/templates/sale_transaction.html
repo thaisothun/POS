@@ -213,7 +213,7 @@
                         data.sale_id.forEach((item)=>{
                             document.getElementById('sale_receipt_id').innerHTML = `No. ${item.invoice_number}`
                             document.getElementById('sale_receipt_date').innerHTML = new Date(item.transaction_date).toLocaleString('en-us',option).replace(' at ', ', ')
-                            document.getElementById('sale_receipt_store_logo').src = `/media/${item.store__logo}`
+                            document.getElementById('sale_receipt_store_logo').src = `${media_url}media/${item.store__logo}`
                             document.getElementById('sale_receipt_store').innerHTML = item.store__name
                             document.getElementById('sale_receipt_store_address').innerHTML = item.store__address
                             document.getElementById('sale_receipt_customer').innerHTML = `${item?.customer__first_name} ${item?.customer__last_name}`
