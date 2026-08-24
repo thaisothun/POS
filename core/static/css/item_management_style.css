@@ -94,7 +94,7 @@
 }
 
 .wrapper_delete_user{
-    position: fixed;
+     position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -113,8 +113,8 @@
     opacity: 1;
 }
 
-.wrapper_reset_password{
-    position: fixed;
+.wrapper_reset_password_user{
+     position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -128,14 +128,9 @@
     transition: 0.3s ease-in;
 }
 
-.wrapper_reset_password.show{
+.wrapper_reset_password_user.show{
     visibility: visible;
     opacity: 1;
-}
-
-.wrapper_add_customer_sale_transaction{
-    position: fixed;
-    display: flex;
 }
 
 .wrapper_add_customer_sale_transaction{
