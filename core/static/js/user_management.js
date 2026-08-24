@@ -197,14 +197,14 @@ form_reset_password.addEventListener('submit', async function(e){
                     title: "Reset Password",
                     text: data.message_sucess,
                     icon: "success"
-                    }); 
+                    }); window.addEventListener('click', ()=>{window.location.href = '/user-management/'})
             }
             if (data.message_error){
                 Swal.fire({
                     title: "Reset Password",
                     text: data.message_error,
                     icon: "error"
-                    }); 
+                    }); window.addEventListener('click', ()=>{window.location.href = '/user-management/'})
             }
         } catch (error) {
         console.error('Fetch error:', error);}
