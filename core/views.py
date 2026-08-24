@@ -3813,13 +3813,11 @@ def user_management_reset_password_user(request, username):
     if request.method == 'POST':
         data = json.loads(request.body)
         new_password = data.get('new_password')
-        print(new_password)
-        print('ok')
         try:
             user = User.objects.get(username=username)
             user.set_password(new_password)
             user.save()
-            message = f'User password {username} was successfully reset.'
+            message = f'User {username} was successfully reset their password.'
             return JsonResponse({'message_sucess': message}, safe=False)  
         except Exception as e:
             return JsonResponse({'message_error': str(e)}, safe=False) 

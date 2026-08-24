@@ -178,14 +178,12 @@ async function get_user(div_name, username) {
 const form_reset_password = document.querySelector('#form_reset_password')
 form_reset_password.addEventListener('submit', async function(e){
     e.preventDefault();
-    const item_id = document.getElementById('username')
+    const item_id = document.getElementById('invoice_id')
+    username = item_id.innerHTML
     const new_password = document.getElementById('new_password').value
-    const data_send = {username: username, new_password: new_password}
-    console.log(new_password)
-    console.log('ok')
-    id = item_id.innerHTML
+    const data_send = {new_password: new_password}
     try {
-        const response = await fetch(`user-management/reset-password/${id}/`, {
+        const response = await fetch(`/user-management/reset-password/${username}/`, {
         method: 'POST',
         headers: {
             'X-CSRFToken': getCookie('csrftoken') // Embedded directly in a Django template
@@ -199,14 +197,14 @@ form_reset_password.addEventListener('submit', async function(e){
                     title: "Reset Password",
                     text: data.message_sucess,
                     icon: "success"
-                    }); window.addEventListener('click', ()=>{window.location.href = '/user-management/'})
+                    }); 
             }
             if (data.message_error){
                 Swal.fire({
                     title: "Reset Password",
                     text: data.message_error,
                     icon: "error"
-                    }); window.addEventListener('click', ()=>{window.location.href = '/user-management/'})
+                    }); 
             }
         } catch (error) {
         console.error('Fetch error:', error);}
