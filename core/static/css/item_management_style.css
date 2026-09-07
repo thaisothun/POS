@@ -991,8 +991,19 @@ h3{
 .sale_transaction_cart table{
     font-size: 0.80rem;
     background-color: white;
+    table-layout: fixed;
+    margin: 0 auto;
     width: 100%;
 }
+
+.sale_transaction_cart table th{
+    text-align: center;
+}
+
+.sale_transaction_cart table td{
+    text-align: center;
+}
+
 
 .cart_item{
     margin-top: 0.5rem;
