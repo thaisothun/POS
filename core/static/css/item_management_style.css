@@ -992,9 +992,7 @@ h3{
     font-size: 0.80rem;
     background-color: white;
     table-layout: fixed;
-    margin-left: auto;
-    margin-right: auto;
-    width: 90%;
+    width: 100%;
 }
 
 .cart_item{
