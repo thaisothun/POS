@@ -996,15 +996,6 @@ h3{
     width: 100%;
 }
 
-.sale_transaction_cart table th{
-    text-align: center;
-}
-
-.sale_transaction_cart table td{
-    text-align: center;
-}
-
-
 .cart_item{
     margin-top: 0.5rem;
     height: 380px;
