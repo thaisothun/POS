@@ -921,7 +921,7 @@ h3{
 
 .sale_transaction_container{
     display: grid;
-    grid-template-columns: 65% 1fr;
+    grid-template-columns: 65% minmax(0, 1fr);
     margin-top: 2rem;
     gap: 1rem
 }
@@ -1001,7 +1001,6 @@ h3{
 .cart_item::-webkit-scrollbar{
     display: none;
 }
-
 
 .sale_transaction_cart .total{
     display: grid;
