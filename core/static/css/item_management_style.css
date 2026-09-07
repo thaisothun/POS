@@ -991,6 +991,7 @@ h3{
 .sale_transaction_cart table{
     font-size: 0.80rem;
     background-color: white;
+    table-layout: fixed;
 }
 
 .cart_item{
