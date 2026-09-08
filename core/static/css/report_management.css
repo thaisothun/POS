@@ -185,11 +185,13 @@
     font-size: 1rem;
     margin: 1rem auto;
     font-weight: 600;
+    color:black;
 }
 
 .profit_loss h3{
     font-size: 1rem;
     margin-left: 2rem;
+    color:black;
 }
 
 
