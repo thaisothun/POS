@@ -63,13 +63,13 @@
         <table>
             <thead>
             <tr>
-            <th>PHOTO</th>
-            <th>NAME</th>
-            <th>PRICE</th>
-            <th></th>
-            <th>Qty</th>
-            <th></th>
-            <th></th>
+            <th style="width: 15%;">PHOTO</th>
+            <th style="width: 25%;">NAME</th>
+            <th style="width: 20%;">PRICE</th>
+            <th style="width: 10%;"></th>
+            <th style="width: 10%;">Qty</th>
+            <th style="width: 10%;"></th>
+            <th style="width: 10%;"></th>
             </tr>
             </thead>
             <tbody id="cart_item">
@@ -291,6 +291,9 @@
         <div>
             <p> Note </p>
             {{ form1.note }}
+        </div>
+        <div style="display: none;">
+            <p> Status </p>
             {{ form1.status}}
         </div>
         </div>
